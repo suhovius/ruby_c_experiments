@@ -20,7 +20,7 @@ VALUE calculate(VALUE self, VALUE a, VALUE b) {
 }
 
 void Init_levenstein_distance() {
-    VALUE mExtFFI = rb_define_module("ExtFFI");
-    VALUE mLevensteinDistance  = rb_define_module_under(mExtFFI, "LevensteinDistance");
-    rb_define_module_function(mLevensteinDistance, "calculate", calculate, 1);
+    VALUE mRubyCExperiments = rb_define_module("RubyCExperiments");
+    VALUE mLevensteinDistance  = rb_define_module_under(mRubyCExperiments, "LevensteinDistance");
+    rb_define_singleton_method(mLevensteinDistance, "calculate", calculate, 2);
 }
