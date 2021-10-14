@@ -21,6 +21,7 @@ VALUE calculate(VALUE self, VALUE a, VALUE b) {
 
 void Init_levenstein_distance() {
     VALUE mRubyCExperiments = rb_define_module("RubyCExperiments");
-    VALUE mLevensteinDistance  = rb_define_module_under(mRubyCExperiments, "LevensteinDistance");
+    VALUE mNative = rb_define_module_under(mRubyCExperiments, "Native");
+    VALUE mLevensteinDistance  = rb_define_module_under(mNative, "LevensteinDistance");
     rb_define_singleton_method(mLevensteinDistance, "calculate", calculate, 2);
 }
