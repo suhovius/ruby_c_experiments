@@ -10,7 +10,7 @@ VALUE calculate(VALUE self, VALUE a, VALUE b) {
     char *cA = StringValueCStr(a);
     char *cB = StringValueCStr(b);
 
-    // Calculate Levenstein distance
+    // Calculate Levenshtein distance
     size_t cDistance = levenshtein(cA, cB);
 
     // Convert size_t wich might be unsigned long long to Number with macro ULL2NUM
@@ -19,9 +19,9 @@ VALUE calculate(VALUE self, VALUE a, VALUE b) {
     return rbDistance;
 }
 
-void Init_levenstein_distance() {
+void Init_levenshtein_distance() {
     VALUE mRubyCExperiments = rb_define_module("RubyCExperiments");
     VALUE mNative = rb_define_module_under(mRubyCExperiments, "Native");
-    VALUE mLevensteinDistance  = rb_define_module_under(mNative, "LevensteinDistance");
-    rb_define_singleton_method(mLevensteinDistance, "calculate", calculate, 2);
+    VALUE mLevenshteinDistance  = rb_define_module_under(mNative, "LevenshteinDistance");
+    rb_define_singleton_method(mLevenshteinDistance, "calculate", calculate, 2);
 }

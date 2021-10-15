@@ -2,7 +2,9 @@
 
 require 'ruby_c_experiments/version'
 require 'ruby_c_experiments/error'
-require 'ruby_c_experiments/native/levenstein_distance/levenstein_distance'
+
+require 'ruby_c_experiments/native/levenshtein_distance/levenshtein_distance'
+require 'ruby_c_experiments/ruby/levenshtein_distance'
 
 # Main module for this gem
 module RubyCExperiments

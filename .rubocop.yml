@@ -1,2 +1,4 @@
 AllCops:
   TargetRubyVersion: 3.0.2
+   Exclude:
+    - lib/ruby_c_experiments/ruby/levenshtein_distance/**/*
