@@ -9,3 +9,7 @@
 
 # notes
 notes.txt
+
+# Do not save binaries to repo as they are intended to be compiled on the machine
+# where they are supposed to be used later
+/lib/ruby_c_experiments/binaries

@@ -3,7 +3,11 @@
 require 'ruby_c_experiments/version'
 require 'ruby_c_experiments/error'
 
-require 'ruby_c_experiments/native/levenshtein_distance/levenshtein_distance'
+# In order to let these files to be required
+# these extensions must be compiled beforehand first with this command
+# rake ruby_c_experiments:native:compile
+require 'ruby_c_experiments/binaries/native/levenshtein_distance/levenshtein_distance'
+
 require 'ruby_c_experiments/ruby/levenshtein_distance'
 require 'ruby_c_experiments/inline/levenshtein_distance'
 

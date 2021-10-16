@@ -1,5 +1,5 @@
 #include <ruby.h>
-#include "levenshtein.h"
+#include "../levenshtein/levenshtein.h"
 
 // https://github.com/wooorm/levenshtein.c original levenshtein C code is defined here
 

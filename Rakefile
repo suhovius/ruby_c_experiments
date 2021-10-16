@@ -7,22 +7,31 @@ require 'rspec/core/rake_task'
 
 require 'benchmark/ips'
 
-require 'ruby_c_experiments'
-
 RSpec::Core::RakeTask.new(:spec)
 
 task default: :spec
 
-EXT_LIB_DIR = 'lib/ruby_c_experiments/native'
-
-ext_lib_dir = ->(ext_name) { [EXT_LIB_DIR, ext_name].join('/') }
+LIB_DIR = 'lib/ruby_c_experiments/binaries'
 
 namespace :ruby_c_experiments do
-  Rake::ExtensionTask.new('levenshtein_distance') do |ext|
-    # Setting lib_dir places the shared library in
-    # lib/ruby_c_experiments/levenshtein_distance/levenshtein_distance.so (or .bundle or .dll)
-    ext.lib_dir = ext_lib_dir.call('levenshtein_distance') # put binaries into this folder.
-    # ext.ext_dir = 'ext/levenshtein_distance' # search for C sources by default
+  make_path = ->(folders) { folders.join('/') }
+
+  namespace :native do
+    lib_dir_prefix = [LIB_DIR, 'native']
+
+    Rake::ExtensionTask.new('levenshtein_distance') do |ext|
+      ext.lib_dir = make_path.call([lib_dir_prefix, ext.name])
+    end
+  end
+
+  # BTW https://github.com/ffi/ffi-compiler can also be used for compilation
+  # and inclusion of ffi libraries instead for rake-compiler as it is done here
+  namespace :ffi do
+    lib_dir_prefix = [LIB_DIR, 'ffi']
+
+    Rake::ExtensionTask.new('levenshtein') do |ext|
+      ext.lib_dir = make_path.call([lib_dir_prefix, ext.name])
+    end
   end
 end
 

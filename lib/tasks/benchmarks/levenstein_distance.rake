@@ -2,6 +2,11 @@ namespace :ruby_c_experiments do
   namespace :benchmarks do
     desc 'Levenshtein distance benckmarks'
     task :levenshtein_distance do
+      # This file is required here since some bundle files for Native C extensions
+      # might not be compiled first and this might fail the Rakefile load,
+      # so it is loaded here, only where it is really needed
+      require 'ruby_c_experiments'
+
       # Sample data and benchmark logic idea (run_with_data) have been derived
       # from this repository
       # https://github.com/christianscott/levenshtein-distance-benchmarks
@@ -19,10 +24,10 @@ namespace :ruby_c_experiments do
       end
 
       implementations = [
-        [RubyCExperiments::Native::LevenshteinDistance, :calculate],
         [RubyCExperiments::Ruby::LevenshteinDistance, :with_rubygems_algorithm],
         [RubyCExperiments::Ruby::LevenshteinDistance, :with_wikipedia_algorithm],
-        [RubyCExperiments::Inline::LevenshteinDistance, :calculate]
+        [RubyCExperiments::Inline::LevenshteinDistance, :calculate],
+        [RubyCExperiments::Native::LevenshteinDistance, :calculate]
       ]
 
       puts "--- IPS For Big File Input ----------------------------"

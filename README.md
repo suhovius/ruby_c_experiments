@@ -21,10 +21,14 @@ Or install it yourself as:
 ## Rake tasks
 
 ```
-rake ruby_c_experiments:benchmarks:levenshtein_distance  # Levenshtein distance benckmarks
-rake ruby_c_experiments:compile                          # Compile all the extensions
-rake ruby_c_experiments:compile:levenshtein_distance     # Compile levenshtein_distance
-rake spec                                                # Run tests
+
+rake ruby_c_experiments:benchmarks:levenshtein_distance      # Levenshtein distance benckmarks
+rake ruby_c_experiments:ffi:compile                          # Compile all the extensions
+rake ruby_c_experiments:ffi:compile:levenshtein              # Compile levenshtein
+rake ruby_c_experiments:native:compile                       # Compile all the extensions
+rake ruby_c_experiments:native:compile:levenshtein_distance  # Compile levenshtein_distance
+
+rake spec                                                    # Run tests
 
 ```
 
