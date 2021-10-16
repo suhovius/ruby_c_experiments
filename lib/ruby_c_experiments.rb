@@ -11,6 +11,8 @@ require 'ruby_c_experiments/binaries/native/levenshtein_distance/levenshtein_dis
 require 'ruby_c_experiments/ruby/levenshtein_distance'
 require 'ruby_c_experiments/inline/levenshtein_distance'
 
+require 'ruby_c_experiments/ffi/levenshtein_distance'
+
 # Main module for this gem
 module RubyCExperiments
   # Some other ruby code might be here
