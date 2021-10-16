@@ -5,6 +5,7 @@ require 'ruby_c_experiments/error'
 
 require 'ruby_c_experiments/native/levenshtein_distance/levenshtein_distance'
 require 'ruby_c_experiments/ruby/levenshtein_distance'
+require 'ruby_c_experiments/inline/levenshtein_distance'
 
 # Main module for this gem
 module RubyCExperiments

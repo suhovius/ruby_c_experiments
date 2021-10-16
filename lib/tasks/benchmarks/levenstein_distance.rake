@@ -15,7 +15,8 @@ namespace :ruby_c_experiments do
       implementations = [
         [RubyCExperiments::Native::LevenshteinDistance, :calculate],
         [RubyCExperiments::Ruby::LevenshteinDistance, :with_rubygems_algorithm],
-        [RubyCExperiments::Ruby::LevenshteinDistance, :with_wikipedia_algorithm]
+        [RubyCExperiments::Ruby::LevenshteinDistance, :with_wikipedia_algorithm],
+        [RubyCExperiments::Inline::LevenshteinDistance, :calculate]
       ]
 
       Benchmark.ips do |x|

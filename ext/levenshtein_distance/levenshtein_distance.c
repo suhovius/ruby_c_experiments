@@ -1,6 +1,8 @@
 #include <ruby.h>
 #include "levenshtein.h"
 
+// https://github.com/wooorm/levenshtein.c original levenshtein C code is defined here
+
 VALUE calculate(VALUE self, VALUE a, VALUE b) {
     // Check that both arguments are strings
     Check_Type(a, T_STRING);

@@ -18,6 +18,16 @@ Or install it yourself as:
 
     $ gem install ruby_c_experiments
 
+## Rake tasks
+
+```
+rake ruby_c_experiments:benchmarks:levenshtein_distance  # Levenshtein distance benckmarks
+rake ruby_c_experiments:compile                          # Compile all the extensions
+rake ruby_c_experiments:compile:levenshtein_distance     # Compile levenshtein_distance
+rake spec                                                # Run tests
+
+```
+
 ## Usage
 
 TODO: Write usage instructions here

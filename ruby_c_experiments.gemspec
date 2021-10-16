@@ -40,6 +40,8 @@ Gem::Specification.new do |spec|
   # Add extension paths to extensions list
   spec.extensions += Dir['ext/**/extconf.rb']
 
+  spec.add_dependency 'RubyInline', '~> 3.12.5'
+
   spec.add_development_dependency 'bundler', '~> 2.2.29'
   spec.add_development_dependency 'rake', '~> 13.0.6'
   spec.add_development_dependency 'rake-compiler', '~> 1.1.1'
