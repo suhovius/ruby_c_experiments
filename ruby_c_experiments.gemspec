@@ -41,6 +41,7 @@ Gem::Specification.new do |spec|
   spec.extensions += Dir['ext/**/extconf.rb']
 
   spec.add_dependency 'RubyInline', '~> 3.12.5'
+  spec.add_dependency 'ffi', '~> 1.15.4'
 
   spec.add_development_dependency 'bundler', '~> 2.2.29'
   spec.add_development_dependency 'rake', '~> 13.0.6'
