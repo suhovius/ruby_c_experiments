@@ -31,7 +31,7 @@ namespace :ruby_c_experiments do
         [RubyCExperiments::Inline::LevenshteinDistance, :calculate],
         [RubyCExperiments::Native::LevenshteinDistance, :calculate],
         [RubyCExperiments::FFI::LevenshteinDistance, :calculate],
-        [RubyCExperiments::Fiddle::LevenshteinDistance, :calculate]
+        [RubyCExperiments::Fiddle::LevenshteinDistance, :levenshtein]
       ]
 
       puts "--- IPS For Big File Input ----------------------------"

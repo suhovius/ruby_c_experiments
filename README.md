@@ -22,6 +22,7 @@ Or install it yourself as:
 
 ```
 
+rake ruby_c_experiments:all:compile                          # Compile all native and ffi extensions
 rake ruby_c_experiments:benchmarks:levenshtein_distance      # Levenshtein distance benckmarks
 rake ruby_c_experiments:ffi:compile                          # Compile all the extensions
 rake ruby_c_experiments:ffi:compile:levenshtein              # Compile levenshtein
@@ -34,7 +35,7 @@ rake spec                                                    # Run tests
 
 ## Usage
 
-TODO: Write usage instructions here
+Compile binaries with `rake ruby_c_experiments:all:compile` before using the gem
 
 ## Development
 

@@ -4,37 +4,24 @@
 # rake ruby_c_experiments:ffi:compile
 
 require 'fiddle'
+require 'fiddle/import'
 
+# Read more here
+# https://ruby-doc.org/stdlib-3.0.2/libdoc/fiddle/rdoc/Fiddle/Importer.html
+# https://www.honeybadger.io/blog/use-any-c-library-from-ruby-via-fiddle-the-ruby-standard-librarys-best-kept-secret/
+# https://medium.com/@astantona/fiddling-with-rubys-fiddle-39f991dd0565
 module RubyCExperiments
   module Fiddle
     module LevenshteinDistance
-      class << self
-        # This must be called first here as it defines 'binaries_list_for' method
-        include ::RubyCExperiments::Helpers::Binaries
+      extend ::Fiddle::Importer
 
-        define_method(:calculate) do |a, b|
-          levenshtein.call(a, b)
-        end
+      library_path = ::RubyCExperiments::Helpers::Binaries.for(
+        '../binaries/ffi/levenshtein/levenshtein', __dir__
+      ).first
 
-        private
+      dlload library_path
 
-        # Values are being cached here to avoid performance issues with
-        # reinitialization of the reused values
-        def lib_levenshtein
-          @lib_levenshtein ||= ::Fiddle.dlopen(
-            binaries_list_for('../binaries/ffi/levenshtein/levenshtein').first
-          )
-        end
-
-        def levenshtein
-          # C definition: size_t levenshtein(const char *a, const char *b) { ... }
-          @levenshtein ||= ::Fiddle::Function.new(
-            lib_levenshtein['levenshtein'],
-            [::Fiddle::TYPE_CONST_STRING, ::Fiddle::TYPE_CONST_STRING],
-            ::Fiddle::TYPE_SIZE_T
-          )
-        end
-      end
+      extern 'size_t levenshtein(const char *a, const char *b)'
     end
   end
 end

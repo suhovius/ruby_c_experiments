@@ -8,13 +8,13 @@ require 'ffi'
 module RubyCExperiments
   module FFI
     module LevenshteinDistance
-      # This must be called first here as it defines 'binaries_list_for' method
-      extend ::RubyCExperiments::Helpers::Binaries
-
       extend ::FFI::Library
 
+      library_paths = ::RubyCExperiments::Helpers::Binaries.for(
+        '../binaries/ffi/levenshtein/levenshtein', __dir__
+      )
       # Try loading in order.
-      ffi_lib(binaries_list_for('../binaries/ffi/levenshtein/levenshtein'))
+      ffi_lib library_paths
 
       # C definition: size_t levenshtein(const char *a, const char *b) { ... }
       attach_function :calculate, :levenshtein, [:string, :string], :size_t
