@@ -5,7 +5,9 @@ require 'rake/extensiontask'
 
 require 'rspec/core/rake_task'
 
-RSpec::Core::RakeTask.new(:spec)
+# TODO: Add recompile only if sources have been changed
+# Compile code every time the spec task is being used
+RSpec::Core::RakeTask.new(spec: 'ruby_c_experiments:all:compile')
 
 task default: :spec
 

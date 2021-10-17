@@ -34,8 +34,12 @@ Gem::Specification.new do |spec|
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
-  spec.files         = Dir['{lib,ext}/**/*', 'MIT-LICENSE', 'Rakefile', 'README.md']
+  spec.files         = Dir[
+    '{lib,ext,spec,bin}/**/*', 'MIT-LICENSE', 'Rakefile', 'Gemfile', 'README.md'
+  ]
   spec.require_paths = ['lib']
+
+  spec.bindir        = 'bin'
 
   # Add extension paths to extensions list
   spec.extensions += Dir['ext/**/extconf.rb']
