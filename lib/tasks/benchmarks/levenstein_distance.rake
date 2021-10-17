@@ -7,6 +7,9 @@ namespace :ruby_c_experiments do
       # so it is loaded here, only where it is really needed
       require 'ruby_c_experiments'
 
+      # Read more about benchmarking
+      # https://hackernoon.com/how-benchmarking-your-code-will-improve-your-ruby-skills-cre3ugd
+
       require 'benchmark/ips'
 
       # Sample data and benchmark logic idea (run_with_data) have been derived
@@ -14,55 +17,61 @@ namespace :ruby_c_experiments do
       # https://github.com/christianscott/levenshtein-distance-benchmarks
       lines = File.readlines(File.expand_path('data/levenshtein_distance.txt', __dir__))
 
-      # Fix benchmark logic, use iterations and call for each iteration
-      # x.iterations. Learn about benchmarking
-      # https://hackernoon.com/how-benchmarking-your-code-will-improve-your-ruby-skills-cre3ugd
-      run_with_data = ->(klass:, calculation_method_name:, lines:) do
+      prepare_becnhmark_operation = ->(klass:, calculation_method_name:) do
+        # Start comparison with empty string
         last_value = ''
-        lines.each do |line|
+
+        # https://apidock.com/ruby/v2_5_5/Enumerable/cycle
+        lines_cycle_enumerator = lines.cycle
+
+        # Prepare callable closure that will be called in the benchmark loop
+        operation = -> do
+          line = lines_cycle_enumerator.next
           klass.public_send(calculation_method_name, last_value, line)
           last_value = line
         end
+
+        # Store some meta data here to let it be displayed later
+        {
+          klass: klass,
+          calculation_method_name: calculation_method_name,
+          operation: operation
+        }
       end
 
       implementations = [
-        [RubyCExperiments::Ruby::LevenshteinDistance, :with_rubygems_algorithm],
-        [RubyCExperiments::Ruby::LevenshteinDistance, :with_wikipedia_algorithm],
-        [RubyCExperiments::Inline::LevenshteinDistance, :calculate],
-        [RubyCExperiments::Native::LevenshteinDistance, :calculate],
-        [RubyCExperiments::FFI::LevenshteinDistance, :calculate],
-        [RubyCExperiments::Fiddle::LevenshteinDistance, :levenshtein]
+        prepare_becnhmark_operation.call(
+          klass: RubyCExperiments::Ruby::LevenshteinDistance,
+          calculation_method_name: :with_rubygems_algorithm
+        ),
+        prepare_becnhmark_operation.call(
+          klass: RubyCExperiments::Ruby::LevenshteinDistance,
+          calculation_method_name: :with_wikipedia_algorithm
+        ),
+        prepare_becnhmark_operation.call(
+          klass: RubyCExperiments::Inline::LevenshteinDistance,
+          calculation_method_name: :calculate
+        ),
+        prepare_becnhmark_operation.call(
+          klass: RubyCExperiments::Native::LevenshteinDistance,
+          calculation_method_name: :calculate
+        ),
+        prepare_becnhmark_operation.call(
+          klass: RubyCExperiments::FFI::LevenshteinDistance,
+          calculation_method_name: :calculate
+        ),
+        prepare_becnhmark_operation.call(
+          klass: RubyCExperiments::Fiddle::LevenshteinDistance,
+          calculation_method_name: :levenshtein
+        )
       ]
 
-      puts "--- IPS For Big File Input ----------------------------"
+      puts "==================== Levenshtein Distance Benchmarks ===================="
       Benchmark.ips do |x|
         implementations.each do |bench_config|
-          label = [bench_config[0],bench_config[1]].join('.')
+          label = [bench_config[:klass],bench_config[:calculation_method_name]].join('.')
           x.report(label) do
-            run_with_data.call(
-              klass: bench_config[0],
-              calculation_method_name: bench_config[1],
-              lines: lines
-            )
-          end
-        end
-
-        x.compare!
-      end
-
-      puts "--- IPS For Long Words --------------------------"
-
-      # https://en.wikipedia.org/wiki/Longest_word_in_English
-      text_a = ['Supercalifragilisticexpialidocious', 'Antidisestablishmentarianism'].sample
-      text_b = ['Floccinaucinihilipilification', 'Honorificabilitudinitatibus'].sample
-
-      Benchmark.ips do |x|
-        implementations.each do |bench_config|
-          label = [bench_config[0],bench_config[1]].join('.')
-          x.report(label) do
-            bench_config[0].public_send(
-              bench_config[1], text_a, text_b
-            )
+            bench_config[:operation].call
           end
         end
 
