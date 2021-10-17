@@ -8,19 +8,8 @@ require 'ffi'
 module RubyCExperiments
   module FFI
     module LevenshteinDistance
-      # class << self
-      #   def calculate(a, b)
-
-      #   end
-      # end
-      BINARY_EXTENSIONS = ['bundle', "#{::FFI::Platform::LIBSUFFIX}"].freeze
-
-      class << self
-        def binaries_list_for(binaries_dir_path)
-          library_path = File.expand_path(binaries_dir_path, __dir__)
-          Dir.glob("#{library_path}.{#{BINARY_EXTENSIONS.join(',')}}")
-        end
-      end
+      # This must be called first here as it defines 'binaries_list_for' method
+      extend ::RubyCExperiments::Helpers::Binaries
 
       extend ::FFI::Library
 

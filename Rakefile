@@ -5,8 +5,6 @@ require 'rake/extensiontask'
 
 require 'rspec/core/rake_task'
 
-require 'benchmark/ips'
-
 RSpec::Core::RakeTask.new(:spec)
 
 task default: :spec
@@ -31,6 +29,14 @@ namespace :ruby_c_experiments do
 
     Rake::ExtensionTask.new('levenshtein') do |ext|
       ext.lib_dir = make_path.call([lib_dir_prefix, ext.name])
+    end
+  end
+
+  namespace :all do
+    desc 'Compile all native and ffi extensions'
+    task :compile do
+      Rake::Task['ruby_c_experiments:ffi:compile'].invoke
+      Rake::Task['ruby_c_experiments:native:compile'].invoke
     end
   end
 end

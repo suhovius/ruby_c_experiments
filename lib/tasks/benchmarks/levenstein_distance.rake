@@ -7,6 +7,8 @@ namespace :ruby_c_experiments do
       # so it is loaded here, only where it is really needed
       require 'ruby_c_experiments'
 
+      require 'benchmark/ips'
+
       # Sample data and benchmark logic idea (run_with_data) have been derived
       # from this repository
       # https://github.com/christianscott/levenshtein-distance-benchmarks
@@ -28,7 +30,8 @@ namespace :ruby_c_experiments do
         [RubyCExperiments::Ruby::LevenshteinDistance, :with_wikipedia_algorithm],
         [RubyCExperiments::Inline::LevenshteinDistance, :calculate],
         [RubyCExperiments::Native::LevenshteinDistance, :calculate],
-        [RubyCExperiments::FFI::LevenshteinDistance, :calculate]
+        [RubyCExperiments::FFI::LevenshteinDistance, :calculate],
+        [RubyCExperiments::Fiddle::LevenshteinDistance, :calculate]
       ]
 
       puts "--- IPS For Big File Input ----------------------------"
@@ -47,27 +50,11 @@ namespace :ruby_c_experiments do
         x.compare!
       end
 
-      puts "--- IPS For One Long Sentence --------------------------"
+      puts "--- IPS For Long Words --------------------------"
 
-      text_a = <<~TEXT
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-        mollit anim id est laborum.
-      TEXT
-
-      text_b = <<~TEXT
-        Lorem UpsAm OLolor sit amet, OTHER CHANGE adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Duis aute irure CAT in reprehenderit in voluptate
-        velit esse cillum John eu fugiat DOE pariatur. Excepteur DOG
-        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-        mollit anim id est laborum.
-      TEXT
+      # https://en.wikipedia.org/wiki/Longest_word_in_English
+      text_a = ['Supercalifragilisticexpialidocious', 'Antidisestablishmentarianism'].sample
+      text_b = ['Floccinaucinihilipilification', 'Honorificabilitudinitatibus'].sample
 
       Benchmark.ips do |x|
         implementations.each do |bench_config|

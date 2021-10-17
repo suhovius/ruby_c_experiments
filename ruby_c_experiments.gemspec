@@ -7,7 +7,7 @@ require 'ruby_c_experiments/version'
 Gem::Specification.new do |spec|
   spec.name          = 'ruby_c_experiments'
   spec.version       = RubyCExperiments::VERSION
-  spec.date = '2021-10-12'
+  spec.date          = '2021-10-12'
   spec.authors       = ['Oleksii Sukhovii']
   spec.email         = ['alexey.suhoviy@gmail.com']
 
@@ -42,6 +42,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'RubyInline', '~> 3.12.5'
   spec.add_dependency 'ffi', '~> 1.15.4'
+  spec.add_dependency 'fiddle', '~> 1.0.9'
 
   spec.add_development_dependency 'bundler', '~> 2.2.29'
   spec.add_development_dependency 'rake', '~> 13.0.6'
