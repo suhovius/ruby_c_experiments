@@ -18,6 +18,8 @@ module RubyCExperiments
 
         private
 
+        # Values are being cached here to avoid performance issues with
+        # reinitialization of the reused values
         def lib_levenshtein
           @lib_levenshtein ||= ::Fiddle.dlopen(
             binaries_list_for('../binaries/ffi/levenshtein/levenshtein').first
@@ -26,7 +28,7 @@ module RubyCExperiments
 
         def levenshtein
           # C definition: size_t levenshtein(const char *a, const char *b) { ... }
-          ::Fiddle::Function.new(
+          @levenshtein ||= ::Fiddle::Function.new(
             lib_levenshtein['levenshtein'],
             [::Fiddle::TYPE_CONST_STRING, ::Fiddle::TYPE_CONST_STRING],
             ::Fiddle::TYPE_SIZE_T
