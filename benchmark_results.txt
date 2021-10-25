@@ -1,0 +1,70 @@
+==================== Levenshtein Distance Benchmarks: IPS ====================
+Warming up --------------------------------------
+RubyCExperiments::Ruby::LevenshteinDistance.with_rubygems_algorithm
+                        11.198k i/100ms
+RubyCExperiments::Ruby::LevenshteinDistance.with_wikipedia_algorithm
+                         3.814k i/100ms
+RubyCExperiments::Inline::LevenshteinDistance.calculate
+                       133.987k i/100ms
+RubyCExperiments::Native::LevenshteinDistance.calculate
+                       156.879k i/100ms
+RubyCExperiments::FFI::LevenshteinDistance.calculate
+                       131.365k i/100ms
+RubyCExperiments::Fiddle::LevenshteinDistance.levenshtein
+                        27.567k i/100ms
+Calculating -------------------------------------
+RubyCExperiments::Ruby::LevenshteinDistance.with_rubygems_algorithm
+                        112.623k (± 0.7%) i/s -    571.098k in   5.071119s
+RubyCExperiments::Ruby::LevenshteinDistance.with_wikipedia_algorithm
+                         37.929k (± 0.6%) i/s -    190.700k in   5.028017s
+RubyCExperiments::Inline::LevenshteinDistance.calculate
+                          1.341M (± 1.4%) i/s -      6.833M in   5.098454s
+RubyCExperiments::Native::LevenshteinDistance.calculate
+                          1.554M (± 1.0%) i/s -      7.844M in   5.049242s
+RubyCExperiments::FFI::LevenshteinDistance.calculate
+                          1.326M (± 2.4%) i/s -      6.700M in   5.054506s
+RubyCExperiments::Fiddle::LevenshteinDistance.levenshtein
+                        277.327k (± 1.1%) i/s -      1.406M in   5.070137s
+
+Comparison:
+RubyCExperiments::Native::LevenshteinDistance.calculate:  1553652.6 i/s
+RubyCExperiments::Inline::LevenshteinDistance.calculate:  1340537.7 i/s - 1.16x  (± 0.00) slower
+RubyCExperiments::FFI::LevenshteinDistance.calculate:  1326300.7 i/s - 1.17x  (± 0.00) slower
+RubyCExperiments::Fiddle::LevenshteinDistance.levenshtein:   277326.9 i/s - 5.60x  (± 0.00) slower
+RubyCExperiments::Ruby::LevenshteinDistance.with_rubygems_algorithm:   112623.0 i/s - 13.80x  (± 0.00) slower
+RubyCExperiments::Ruby::LevenshteinDistance.with_wikipedia_algorithm:    37928.8 i/s - 40.96x  (± 0.00) slower
+
+==================== Levenshtein Distance Benchmarks: Memory =================
+Calculating -------------------------------------
+RubyCExperiments::Ruby::LevenshteinDistance.with_rubygems_algorithm
+                       552.000  memsize (    40.000  retained)
+                         5.000  objects (     1.000  retained)
+                         0.000  strings (     0.000  retained)
+RubyCExperiments::Ruby::LevenshteinDistance.with_wikipedia_algorithm
+                         8.240k memsize (    40.000  retained)
+                       202.000  objects (     1.000  retained)
+                         9.000  strings (     0.000  retained)
+RubyCExperiments::Inline::LevenshteinDistance.calculate
+                        80.000  memsize (    40.000  retained)
+                         2.000  objects (     1.000  retained)
+                         0.000  strings (     0.000  retained)
+RubyCExperiments::Native::LevenshteinDistance.calculate
+                        40.000  memsize (    40.000  retained)
+                         1.000  objects (     1.000  retained)
+                         0.000  strings (     0.000  retained)
+RubyCExperiments::FFI::LevenshteinDistance.calculate
+                        40.000  memsize (    40.000  retained)
+                         1.000  objects (     1.000  retained)
+                         0.000  strings (     0.000  retained)
+RubyCExperiments::Fiddle::LevenshteinDistance.levenshtein
+                       309.000  memsize (    40.000  retained)
+                         5.000  objects (     1.000  retained)
+                         0.000  strings (     0.000  retained)
+
+Comparison:
+RubyCExperiments::Native::LevenshteinDistance.calculate:         40 allocated
+RubyCExperiments::FFI::LevenshteinDistance.calculate:         40 allocated - same
+RubyCExperiments::Inline::LevenshteinDistance.calculate:         80 allocated - 2.00x more
+RubyCExperiments::Fiddle::LevenshteinDistance.levenshtein:        309 allocated - 7.72x more
+RubyCExperiments::Ruby::LevenshteinDistance.with_rubygems_algorithm:        552 allocated - 13.80x more
+RubyCExperiments::Ruby::LevenshteinDistance.with_wikipedia_algorithm:       8240 allocated - 206.00x more

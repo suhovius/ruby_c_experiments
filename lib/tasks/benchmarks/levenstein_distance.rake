@@ -11,6 +11,7 @@ namespace :ruby_c_experiments do
       # https://hackernoon.com/how-benchmarking-your-code-will-improve-your-ruby-skills-cre3ugd
 
       require 'benchmark/ips'
+      require 'benchmark/memory'
 
       # Sample data and benchmark logic idea (run_with_data) have been derived
       # from this repository
@@ -66,14 +67,25 @@ namespace :ruby_c_experiments do
         )
       ]
 
-      puts "==================== Levenshtein Distance Benchmarks ===================="
-      Benchmark.ips do |x|
+      run_for = ->(implementations:, x:) do
         implementations.each do |bench_config|
           label = [bench_config[:klass],bench_config[:calculation_method_name]].join('.')
           x.report(label) do
             bench_config[:operation].call
           end
         end
+      end
+
+      puts "==================== Levenshtein Distance Benchmarks: IPS ===================="
+      Benchmark.ips do |x|
+        run_for.call(implementations: implementations, x: x)
+
+        x.compare!
+      end
+
+      puts "==================== Levenshtein Distance Benchmarks: Memory ================="
+      Benchmark.memory do |x|
+        run_for.call(implementations: implementations, x: x)
 
         x.compare!
       end

@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+# Actually mangling of the load path is not nessesary in general, but in this
+# particular implementation it is needed to let benchmarking rake tasks
+# to work with gem's code
+# https://guides.rubygems.org/patterns/#loading-code
 lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'ruby_c_experiments/version'
@@ -53,4 +57,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rake-compiler', '~> 1.1.1'
   spec.add_development_dependency 'rspec', '~> 3.10.0'
   spec.add_development_dependency 'benchmark-ips', '~> 2.9.2'
+  spec.add_development_dependency 'benchmark-memory', '~> 0.1.2'
 end
