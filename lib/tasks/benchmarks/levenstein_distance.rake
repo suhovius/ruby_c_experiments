@@ -10,6 +10,7 @@ namespace :ruby_c_experiments do
       # Read more about benchmarking
       # https://hackernoon.com/how-benchmarking-your-code-will-improve-your-ruby-skills-cre3ugd
 
+      require 'benchmark'
       require 'benchmark/ips'
       require 'benchmark/memory'
 
@@ -76,19 +77,38 @@ namespace :ruby_c_experiments do
         end
       end
 
-      puts "==================== Levenshtein Distance Benchmarks: IPS ===================="
+      puts "==================== Levenshtein Distance Benchmarks =========================\n"
+
+      puts "==================== Elapsed Time ============================================"
+      Benchmark.bmbm do |x|
+        long_words = %w[Supercalifragilisticexpialidocious Honorificabilitudinitatibus]
+
+        implementations.each do |bench_config|
+          label = [bench_config[:klass],bench_config[:calculation_method_name]].join('.')
+          x.report(label) do
+            bench_config[:klass].public_send(
+              bench_config[:calculation_method_name], *long_words
+            )
+          end
+        end
+      end
+      puts "\n"
+
+      puts "==================== Iterations Per Second ====================================\n"
       Benchmark.ips do |x|
         run_for.call(implementations: implementations, x: x)
 
         x.compare!
       end
+      puts "\n"
 
-      puts "==================== Levenshtein Distance Benchmarks: Memory ================="
+      puts "==================== Memory ===================================================\n"
       Benchmark.memory do |x|
         run_for.call(implementations: implementations, x: x)
 
         x.compare!
       end
+      puts "\n"
     end
   end
 end
